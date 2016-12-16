@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+
+{% include head.html %}
+
+<body>
+
+    {% include header.html %}
+	<div class="archive">
+	
+	{% for pop in site.archive %}
+	 {% include popup.html %}
+	{% endfor %}
+	<div class="archive-back">
+	</div>
+</div>
+
+ <div id="fullpage"> 
+
+{% include chapter.html %} 
+{% assign Persia = site.sections | where: "chapter", "Persia" %}
+{% assign Oil = site.sections | where: "chapter", "Oil and Imperialism" %}
+{% assign Reza = site.sections | where: "chapter", "Reza Shah" %}
+{% assign WorldWar = site.sections | where: "chapter", "World War II" %}
+
+	{% for item in Persia %}
+    	<!-- {% include reading.html %} 
+    	{% include quote.html %} 
+    	{% include pop-up.html %}  -->
+    {% endfor %}
+	{% for item in Oil %}
+    	{% include reading.html %} 
+    	{% include quote.html %} 
+    	{% include pop-up.html %} 
+    {% endfor %}
+	{% for item in Reza %}
+    	{% include reading.html %} 
+    	{% include quote.html %} 
+    	{% include pop-up.html %} 
+    {% endfor %}
+    {% for item in WorldWar %}
+    	{% include reading.html %} 
+    	{% include quote.html %} 
+    	{% include pop-up.html %} 
+    {% endfor %}
+
+
+</div>
+
+{% include footer.html %}
+
+</body>
+
+</html>

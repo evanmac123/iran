@@ -1,0 +1,58 @@
+---
+---
+$prefix-for-webkit:    true !default;
+$prefix-for-mozilla:   true !default;
+$prefix-for-microsoft: true !default;
+$prefix-for-opera:     true !default;
+$prefix-for-spec:      true !default;
+
+//COLORS
+$orange:#FF864A;
+$black:#000;
+$grey:#666666;
+$opac-back:.5;//background-image
+$opac-dark:.9;
+$white:#FFF;
+$background-color: #666666;
+$overlay:rgba(102,102,102,0.92);
+$dark-overlay:rgba(52,52,52,0.5);
+$light-overlay: rgba(193, 193, 193, 0.62);
+$orange-overlay:rgba(255, 134, 74, 0.45);
+//TYPE
+
+$link-color: #1FF; // default link color
+$link-hover: #0FA0CE; // default link color on :hover
+$link-decoration: none; // default link decoration
+
+$font-size: 16px;  // default font size. Change here will adjust sizes across the board.
+$font-weight: 400; // sets the font weight
+$font-family: "handwrite", "Helvetica Neue", Helvetica, Arial, sans-serif; // default fonts
+$font-color: #222;  // default font color
+$letter-spacing-hand: 1.5px;
+
+$heading-family: "typewriter"; // default heading (h1-h6) font
+$heading-color: $font-color; // default heading (h1-h6) color
+$heading-weight: 300; // sets the weight of the heading text
+
+$form-font: "typewriter"; // default form font
+
+//BUTTON
+
+$button-color: #555;
+$button-weight: 600;
+$button-font-uppercase: true;
+$button-border-color: #bbb;
+
+// GRID CHANGES
+$is-fluid: true; // Change to true to enable the fluid grid
+$use-global-border-box: false; // Change to true the enable global border-box
+$base-width: if($is-fluid, 100%, ($base-col-width + $base-gutter-width) * $base-col-count);
+$grid-max-width: 960px;
+$base-col-count: 12;
+$base-col-width: 60px;
+$use-new-grid: true;
+
+// Transitions
+
+$transition: all 1s ease-in-out;
+$transitionfast: all .6 ease-in-out;

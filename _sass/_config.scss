@@ -1,0 +1,641 @@
+// GLOBAL VARIABLES - default global variables in this file.
+// If you wish to change the default value of these variables,
+// please do so in your _MYconfig.scss.
+
+// background vars
+$background-color: #fff !global; // default background color
+
+// GENERAL
+$use-global-border-box: true !global; // use global border box?
+$use-rem: false !global; // use rem as default unit?
+$use-em: true !global; // use em as default unit?
+$use-percent: false !global; // use percentage as default unit?
+$use-px-fallback: true !global; // allow for pixel fall back
+
+// FONTS
+$font-size: 14px !global;  // default font size. Change here will adjust sizes across the board.
+$font-family: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif !global; // default fonts
+$heading-family: "Georgia", "Times New Roman", serif !global; // default heading (h1-h6) font
+$font-color: #444 !global;  // default font color
+$heading-color: #181818 !global; // default heading (h1-h6) color
+$form-font: $font-family !global; // default form font
+
+// LINKS
+$link-color: #333 !global; // default link color
+$link-hover: #000 !global; // default link color on :hover
+$link-decoration: underline !global; // default link decoration
+
+// GRID
+// $base-width: 960px !global;  // The overall width of the grid (.container)
+$is-fluid: true !global; // Change to true to enable the fluid grid
+$base-col-width: 40px !global; // The width of each columns
+$base-gutter-width: 20px !global; // The space between columns
+$base-col-count: 16 !global; // The number of columns
+$base-width: if($is-fluid, 98%, ($base-col-width + $base-gutter-width) * $base-col-count) !global; // Calculated
+$new-grid-width: 80%; // the new grid with set within the 550px breakpoint
+
+// BREAKPOINTS
+$tablet-width: 768px !global; // the tablet width media query
+$mobile-portrait-width: 300px !global; // the mobile portrait media query
+$mobile-landscape-width: 420px !global; // the mobile landscape media query
+$mobile-fluid-width: 100%; // this value is not used with breakpoints, it is used in generating a fluid grid for mobile devices
+
+// ------ CHANGE MAY CAUSE UNDESIRED RESULTS
+$base-font-size: 10px !global; // the font size in the html element so we can use ems and rems in a friendly way
+$use-new-grid: true !global; // Uses the new grid released in Skeleton CSS 2
+
+// ------ IMPORTS. DO NOT CHANGE
+// Core mixin and function dependencies that are globally scoped.
+// Can be used as building blocks for other functions/mixins in your
+// own themes.
+
+// ---------- MIXIN DEPENDENCIES
+
+// _fluidGrid ( number $colCount, [ boolean $new = true ] )
+@mixin _fluidGrid($colCount, $new: $use-new-grid) {
+	// override only for fluid
+	/* Overrides */
+	$gutter: percent($base-gutter-width) / 100;
+	@if($new == true) {
+		.container { width: $new-grid-width; }
+	}
+	@if($new == false) {
+		.column,
+		.columns {
+			margin: {
+				left: $gutter / 2;
+				right: $gutter / 2;
+			}
+		}
+	}
+	@if($new == true) {
+		.column,
+		.columns {
+			margin-left: percent($gutter * 2) / 10;
+			&:first-child { margin-left: 0; }
+		}
+	}
+
+	@for $i from 1 through $colCount {
+		$subtractor: 2;
+		@if($new == true) { $subtractor: ($colCount - $i) / 3; }
+		@if($i == 1) {
+			.#{numToString($i)}.column,
+			.#{numToString($i)}.columns { width: percentage($i / $colCount) - $subtractor; }
+		} @else {
+			@if($i == $colCount and $new == true) {
+				.#{numToString($i)}.columns {
+					width: percentage($i / $colCount);
+					margin-left: 0;
+				}
+			} @else {
+				.#{numToString($i)}.columns { width: percentage($i / $colCount) - $subtractor; }
+			}
+		}
+	}
+	// $top: percentage($colCount / $colCount) - 2; // not sure if this is needed -- test with < 2.5
+	.one-third.column,
+	.one-third.columns { width: 98% * (1 / 3) - 2; }
+	.two-thirds.column,
+	.two-thirds.columns { width: 98% * (2 / 3) - 2; }
+	.one-half.column,
+	.one-half.columns { width: 48%; }
+	.full-width.column,
+	.full-width.columns {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	@include _offset(true, $colCount, false);
+}
+
+// _fixedGrid ( number $width, number $colWidth, number $gutterWidth, number $colCount )
+@mixin _fixedGrid($width, $colWidth, $gutterWidth, $colCount) {
+	.container {
+		.column,
+		.columns {
+			margin: {
+				left: $gutterWidth / 2;
+				right: $gutterWidth / 2;
+			};
+		}
+	}
+	/* The Grid */
+	.container {
+		@for $i from 1 through $colCount {
+			 @if($i == 1) {
+				.#{numToString($i)}.column,
+				.#{numToString($i)}.columns { width: $colWidth; }
+			} @else {
+				.#{numToString($i)}.columns { width: $colWidth + (($colWidth + $gutterWidth) * ($i - 1)); }
+			}
+		}
+		.one-third.column { width: ($width / 3) - 20}
+		.two-thirds.column { width: (($width * 2) / 3) - 20 }
+		.full-width.columns {
+			width: $width;
+			margin-left: 0;
+			margin-right: 0;
+		}
+		@include _offset(false, $colCount, $colWidth);
+	}
+}
+
+// _offset ( boolean $is-fluid, number $colCount, number $colWidth, [ $new = false ] )
+@mixin _offset($is-fluid, $colCount, $colWidth, $new: $use-new-grid) { // TODO: finish this
+	@for $i from 1 through ($colCount - 1 ) {
+		.offset-by-#{numToString($i)} { margin-left: if($is-fluid, percentage($i / $colCount) + ($i / 3), ($colWidth + 20) * $i); }
+	}
+	@if($is-fluid == true and $new == true) {
+		.offset-by-one-third.column,
+		.offset-by-one-third.columns { margin-left: 98% * (1 / 3) + 2; }
+		.offset-by-two-thirds.column,
+		.offset-by-two-thirds.columns { margin-left: 98% * (2 / 3) + 4; }
+		.offset-by-one-half.column,
+		.offset-by-one-half.columns { margin-left: 52%; }
+	}
+}
+
+// _mobileGrid ( number $width, number $colCount, boolean $isFluid )
+@mixin _mobileGrid($width, $colCount, $isFluid) {
+	$width: if($isFluid, $mobile-fluid-width, $width);
+	.container {
+		width: $width;
+		.column,
+		.columns {
+			// fixes https://github.com/atomicpages/skeleton-sass/issues/9
+			margin: {
+				left: if($isFluid, 2%, 0);
+				right: if($isFluid, 2%, 0);
+			};
+		}
+		@for $i from 1 through $colCount {
+			@if ($i == 1) {
+				.#{numToString($i)}.column { width: $width; }
+			}
+		}
+		@include _group($colCount, ".columns", "after") { width: $width - 4; }
+		.one-third.column { width: $width - 4; }
+		.two-thirds.column { width: $width - 4; }
+		.full-width.columns {
+			width: $width;
+			margin-left: 0;
+			margin-right: 0;
+		}
+		@include _mobileOffset($colCount);
+	}
+}
+
+// _mobileOffset ( number $colCount )
+@mixin _mobileOffset($colCount) {
+	@include _group($colCount - 1, "offset-by-") { padding-left: 0; }
+}
+
+// _group ( number $stop, string $selector, [ string $pos: "before" ] )
+@mixin _group($stop, $selector, $pos: "before") {
+	$store: "";
+	@if(type-of($stop) != "number") {
+		@warn "Stop must be a number! #{type-of($stop)} was provided.";
+	}
+	@if($pos == "after") {
+		@for $i from 1 through $stop {
+			$store: $store + "." + numToString($i) + $selector + ",";
+		}
+	} @else {
+		@for $i from 1 through $stop {
+			$store: $store + "." + $selector + numToString($i) + ",";
+		}
+	}
+	#{$store} { @content; }
+}
+
+// ---------- FUNCTION DEPENDENCIES
+
+// Converts a number from 0 to 100 to the English word
+// string numToString ( number $int )
+@function numToString($int) {
+	// set up lists
+	$ones: "one", "two", "three", "four", "five", "six", "seven", "eight", "nine";
+	$teens: "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen";
+	$tens: "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety";
+
+	$int: abs($int); // no nonnegative numbers
+	$number: "";
+	$temp: $int / 10;
+	$temp: floor($temp);
+	@if($int >= 1 and $int <= 100) {
+		@if($temp < 1) { // it's a one!
+			$number: nth($ones, $int % 10);
+		}
+		@if($temp == 1) { // in the teen range
+			@if($int % 10 == 0) {
+				$number: "ten";
+			} @else {
+				$number: nth($teens, $int % 10);
+			}
+		}
+		@if($temp >= 2 and $temp <= 9) { // more than our teens
+			@if($int % 10 == 0) {
+				// means it's a number evenly divisible by 10
+				$number: nth($tens, $int / 10);
+			} @else {
+				$number: "#{nth($tens, floor($int / 10))}-#{nth($ones, $int % 10)}";
+			}
+		}
+		@if($temp == 10) { // this is the end...
+			$number: "one-hundred";
+		}
+	} @else {
+		$number: "Invalid parameter passed. Number must be between 1 and 100."
+	}
+	@return $number;
+}
+
+@function _calcRU($px, $base, $unit) {
+	$unit: quote($unit);
+
+	@if not $unit == "em" or not $unit == "rem" or not $unit == "%" {
+		@debug "Invalid unit, choose 'em' or 'rem'";
+		@return null;
+	}
+
+	@if not unitless($px) {
+		$px: strip-units($px);
+	}
+
+	@if not unitless($base) {
+		$base: strip-units($base);
+	}
+
+	@if($unit == "%") {
+		@return percentage($px / $base);
+	}
+
+	@return #{($px / $base) * 1}#{$unit};
+}
+
+// Public functions that can be used globally.
+
+// Core mixin and function dependencies that are globally scoped.
+// Can be used as building blocks for other functions/mixins in your
+// own themes.
+
+// ---------- MIXIN DEPENDENCIES
+
+// _fluidGrid ( number $colCount, [ boolean $new = true ] )
+@mixin _fluidGrid($colCount, $new: $use-new-grid) {
+	// override only for fluid
+	/* Overrides */
+	$gutter: percent($base-gutter-width) / 100;
+	@if($new == true) {
+		.container { width: $new-grid-width; }
+	}
+	@if($new == false) {
+		.column,
+		.columns {
+			margin: {
+				left: $gutter / 2;
+				right: $gutter / 2;
+			}
+		}
+	}
+	@if($new == true) {
+		.column,
+		.columns {
+			margin-left: percent($gutter * 2) / 10;
+			&:first-child { margin-left: 0; }
+		}
+	}
+
+	@for $i from 1 through $colCount {
+		$subtractor: 2;
+		@if($new == true) { $subtractor: ($colCount - $i) / 3; }
+		@if($i == 1) {
+			.#{numToString($i)}.column,
+			.#{numToString($i)}.columns { width: percentage($i / $colCount) - $subtractor; }
+		} @else {
+			@if($i == $colCount and $new == true) {
+				.#{numToString($i)}.columns {
+					width: percentage($i / $colCount);
+					margin-left: 0;
+				}
+			} @else {
+				.#{numToString($i)}.columns { width: percentage($i / $colCount) - $subtractor; }
+			}
+		}
+	}
+	// $top: percentage($colCount / $colCount) - 2; // not sure if this is needed -- test with < 2.5
+	.one-third.column,
+	.one-third.columns { width: 98% * (1 / 3) - 2; }
+	.two-thirds.column,
+	.two-thirds.columns { width: 98% * (2 / 3) - 2; }
+	.one-half.column,
+	.one-half.columns { width: 48%; }
+	.full-width.column,
+	.full-width.columns {
+		width: 100%;
+		margin-left: 0;
+		margin-right: 0;
+	}
+
+	@include _offset(true, $colCount, false);
+}
+
+// _fixedGrid ( number $width, number $colWidth, number $gutterWidth, number $colCount )
+@mixin _fixedGrid($width, $colWidth, $gutterWidth, $colCount) {
+	.container {
+		.column,
+		.columns {
+			margin: {
+				left: $gutterWidth / 2;
+				right: $gutterWidth / 2;
+			};
+		}
+	}
+	/* The Grid */
+	.container {
+		@for $i from 1 through $colCount {
+			 @if($i == 1) {
+				.#{numToString($i)}.column,
+				.#{numToString($i)}.columns { width: $colWidth; }
+			} @else {
+				.#{numToString($i)}.columns { width: $colWidth + (($colWidth + $gutterWidth) * ($i - 1)); }
+			}
+		}
+		.one-third.column { width: ($width / 3) - 20}
+		.two-thirds.column { width: (($width * 2) / 3) - 20 }
+		.full-width.columns {
+			width: $width;
+			margin-left: 0;
+			margin-right: 0;
+		}
+		@include _offset(false, $colCount, $colWidth);
+	}
+}
+
+// _offset ( boolean $is-fluid, number $colCount, number $colWidth, [ $new = false ] )
+@mixin _offset($is-fluid, $colCount, $colWidth, $new: $use-new-grid) { // TODO: finish this
+	@for $i from 1 through ($colCount - 1 ) {
+		.offset-by-#{numToString($i)} { margin-left: if($is-fluid, percentage($i / $colCount) + ($i / 3), ($colWidth + 20) * $i); }
+	}
+	@if($is-fluid == true and $new == true) {
+		.offset-by-one-third.column,
+		.offset-by-one-third.columns { margin-left: 98% * (1 / 3) + 2; }
+		.offset-by-two-thirds.column,
+		.offset-by-two-thirds.columns { margin-left: 98% * (2 / 3) + 4; }
+		.offset-by-one-half.column,
+		.offset-by-one-half.columns { margin-left: 52%; }
+	}
+}
+
+// _mobileGrid ( number $width, number $colCount, boolean $isFluid )
+@mixin _mobileGrid($width, $colCount, $isFluid) {
+	$width: if($isFluid, $mobile-fluid-width, $width);
+	.container {
+		width: $width;
+		.column,
+		.columns {
+			// fixes https://github.com/atomicpages/skeleton-sass/issues/9
+			margin: {
+				left: if($isFluid, 2%, 0);
+				right: if($isFluid, 2%, 0);
+			};
+		}
+		@for $i from 1 through $colCount {
+			@if ($i == 1) {
+				.#{numToString($i)}.column { width: $width; }
+			}
+		}
+		@include _group($colCount, ".columns", "after") { width: $width - 4; }
+		.one-third.column { width: $width - 4; }
+		.two-thirds.column { width: $width - 4; }
+		.full-width.columns {
+			width: $width;
+			margin-left: 0;
+			margin-right: 0;
+		}
+		@include _mobileOffset($colCount);
+	}
+}
+
+// _mobileOffset ( number $colCount )
+@mixin _mobileOffset($colCount) {
+	@include _group($colCount - 1, "offset-by-") { padding-left: 0; }
+}
+
+// _group ( number $stop, string $selector, [ string $pos: "before" ] )
+@mixin _group($stop, $selector, $pos: "before") {
+	$store: "";
+	@if(type-of($stop) != "number") {
+		@warn "Stop must be a number! #{type-of($stop)} was provided.";
+	}
+	@if($pos == "after") {
+		@for $i from 1 through $stop {
+			$store: $store + "." + numToString($i) + $selector + ",";
+		}
+	} @else {
+		@for $i from 1 through $stop {
+			$store: $store + "." + $selector + numToString($i) + ",";
+		}
+	}
+	#{$store} { @content; }
+}
+
+// ---------- FUNCTION DEPENDENCIES
+
+// Converts a number from 0 to 100 to the English word
+// string numToString ( number $int )
+@function numToString($int) {
+	// set up lists
+	$ones: "one", "two", "three", "four", "five", "six", "seven", "eight", "nine";
+	$teens: "eleven", "twelve", "thirteen", "fourteen", "fifteen", "sixteen", "seventeen", "eighteen", "nineteen";
+	$tens: "", "twenty", "thirty", "forty", "fifty", "sixty", "seventy", "eighty", "ninety";
+
+	$int: abs($int); // no nonnegative numbers
+	$number: "";
+	$temp: $int / 10;
+	$temp: floor($temp);
+	@if($int >= 1 and $int <= 100) {
+		@if($temp < 1) { // it's a one!
+			$number: nth($ones, $int % 10);
+		}
+		@if($temp == 1) { // in the teen range
+			@if($int % 10 == 0) {
+				$number: "ten";
+			} @else {
+				$number: nth($teens, $int % 10);
+			}
+		}
+		@if($temp >= 2 and $temp <= 9) { // more than our teens
+			@if($int % 10 == 0) {
+				// means it's a number evenly divisible by 10
+				$number: nth($tens, $int / 10);
+			} @else {
+				$number: "#{nth($tens, floor($int / 10))}-#{nth($ones, $int % 10)}";
+			}
+		}
+		@if($temp == 10) { // this is the end...
+			$number: "one-hundred";
+		}
+	} @else {
+		$number: "Invalid parameter passed. Number must be between 1 and 100."
+	}
+	@return $number;
+}
+
+@function _calcRU($px, $base, $unit) {
+	$unit: quote($unit);
+
+	@if not $unit == "em" or not $unit == "rem" or not $unit == "%" {
+		@debug "Invalid unit, choose 'em' or 'rem'";
+		@return null;
+	}
+
+	@if not unitless($px) {
+		$px: strip-units($px);
+	}
+
+	@if not unitless($base) {
+		$base: strip-units($base);
+	}
+
+	@if($unit == "%") {
+		@return percentage($px / $base);
+	}
+
+	@return #{($px / $base) * 1}#{$unit};
+}
+// Don't remove me
+
+// addresses https://github.com/nex3/sass/issues/533
+// number strip-units ( number $number )
+@function strip-units($number) {
+	@return $number / ($number * 0 + 1);
+}
+
+// to determine the unit. If it's a percentage, then our equation changes.
+// number em ( number $px, [ number $base: $base-font-size ] )
+@function em($px, $base: $base-font-size) {
+	@return _calcRU($px, $base, "em");
+}
+
+// number rem ( number $px, [ number $base: $base-font-size ] )
+@function rem($px, $base: $base-font-size) {
+	@return _calcRU($px, $base, "rem");
+}
+
+// number percent ( number $px, [ number $base: $base-font-size ] )
+@function percent($px, $base: $base-font-size) {
+	@return _calcRU($px, $base, "%");
+}
+
+// number relative ( number $size )
+@function relative($size) {
+	@if($use-rem == true and $use-em == false and $use-percent == false) {
+		@return rem($size);
+	} @elseif($use-em == true and $use-rem == false and $use-percent == false) {
+		@return em($size);
+	} @elseif($use-percent == true and $use-rem == false and $use-em == false) {
+		@return percent($size);
+	}
+
+	@return $size; // we're still using pixels
+}
+
+// list triad ( color $color )
+@function triad($color) {
+	@if(type-of($color) != "color") {
+		@warn "Type must be color to continue. Aborting.";
+		@return null;
+	}
+
+	$triad: ();
+	$hue: strip-units(hue($color));
+
+	@for $i from 1 through 3 {
+		@if($hue + 120 > 360) {
+			$hue: ($hue + 120) - 360;
+		} @else {
+			$hue: $hue + 120;
+		}
+		$color: hsl($hue, saturation($color), lightness($color));
+		$triad: append($triad, $color);
+	}
+
+	@return $triad;
+}
+
+// list square ( color $color )
+@function square($color) {
+	@if(type-of($color) != "color") {
+		@warn "Type must be color to continue. Aborting.";
+		@return null;
+	}
+
+	$square: ();
+	$hue: strip-units(hue($color));
+
+	@for $i from 1 through 4 {
+		@if($hue + 90 > 360) {
+			$hue: ($hue + 90) - 360;
+		} @else {
+			$hue: $hue + 90;
+		}
+		$color: hsl($hue, saturation($color), lightness($color));
+		$square: append($square, $color);
+	}
+
+	@return $square;
+}
+
+// Core mixins with global scope.
+// Note: all logic for private mixins are in _dependencies.scss
+
+// grid ( [ number $width: 960px, [ boolean $fluid: false, [  number $gutterWidth: 20px, [ number $colCount: 16 ] ] ] ] )
+@mixin grid($width: $base-width, $fluid: $is-fluid, $gutterWidth: $base-gutter-width, $colCount: $base-col-count) {
+	@if($fluid) {
+		@include _fluidGrid($colCount, $new: $use-new-grid);
+	} @else {
+		// we no longer need to set a value for $colWdith because it is generated dynamically right here!
+		// @see https://github.com/atomicpages/skeleton-sass/issues/7
+		// _fixedGrid ( $width, $colWidth, $gutterWidth, $colCount )
+		@include _fixedGrid($width, (($width / $colCount) - $gutterWidth), $gutterWidth, $colCount);
+	}
+}
+
+// mobileGrid ( [ number $width: 960px, [ number $colCount: 16 ] ] )
+@mixin mobileGrid($width: $base-width, $isFluid: $is-fluid, $colCount: $base-col-count) {
+	@include _mobileGrid($width, $colCount, $isFluid);
+}
+
+// font-size ( [ number $size, [ boolean $fallback: true ] ] )
+@mixin font-size($size, $fallback: $use-px-fallback) {
+	@if($fallback) {
+		font-size: $size;
+	}
+
+	@if($use-rem and not $use-em and not $use-percent) {
+		font-size: rem($size);
+	} @elseif($use-em and not $use-rem and not $use-percent) {
+		font-size: em($size);
+	} @elseif($use-percent and not $use-rem and not $use-em) {
+		font-size: percent($size);
+	} @else {
+		@debug "More than one option is chosen for the default unit. Choose only one. Defaulting to px.";
+		@if(not $fallback) { // we have no other choice...
+			font-size: $size;
+		}
+	}
+}
+
+// hide-text ( )
+@mixin hide-text {
+	text-indent: 100%;
+	white-space: nowrap;
+	overflow: hidden;
+}
+
+
+
+

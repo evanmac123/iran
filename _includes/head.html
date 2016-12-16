@@ -1,0 +1,317 @@
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% if page.title %}{{ page.title }}{% else %}{{ site.title }}{% endif %}</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="{{ site.description }}">
+    <link rel="canonical" href="{{ page.url | replace:'index.html','' | prepend: site.baseurl | prepend: site.url }}">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+   <link rel="stylesheet" href="{{ "/css/jquery.fullPage.css" | prepend: site.baseurl }}">
+    <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+   <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+    <script type="text/javascript" src="{{ "/assets/js/jquery.js" | prepend: site.baseurl }}"></script>
+   <script type="text/javascript" src="{{ "/assets/js/jquery.fullPage.min.js" | prepend: site.baseurl }}"></script>
+   <script type="text/javascript" src="{{ "/assets/js/jquery.slimscroll.min.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript" src="{{ "/assets/js/jquery.jkit.1.2.16.js" | prepend: site.baseurl }}"></script>   
+    <script type="text/javascript">
+
+
+//Scrolling
+    $(document).ready(function() {
+      $('body').jKit();
+    //slimscroll.js
+    $('.reading-text').slimScroll({
+    height: '400px',
+    allowPageScroll: false, 
+    });
+
+    var amount = '';
+
+    function scroll() {
+    $('.reading-text').animate({
+        scrollTop: amount
+    }, 140, 'linear',function() {
+        if (amount != '') {
+            scroll();
+        }
+    });
+    }
+
+    $('.top-hover-scroll').hover(function() {
+        amount = '-=5';
+        scroll();
+    }, function() {
+        amount = '';
+    });
+    $('.bottom-hover-scroll').hover(function() {
+        amount = '+=5';
+        scroll();
+    }, function() {
+        amount = '';
+    });
+    $('.mid-hover-scroll').hover(function() {
+      var amount = '';
+      console.log("cats");
+    });
+
+
+    fade = 0;
+    //fullpage.js
+  $('#fullpage').fullpage({
+         onLeave: function(index, nextIndex, direction){  
+
+            if([2,6,13,17].indexOf(nextIndex) !== -1 ) {  
+            $(".chapter-title").addClass("chapter-closed");      
+          }
+
+            else {   
+            $(".chapter-title").removeClass("chapter-closed");      
+          }
+
+        
+
+        /*  
+            // reading slide going down with writing -> blank
+            if ( direction == "down" && fade == 0) {   
+          
+            $(".reading-read").animate({
+              opacity:0.25  },1000, function(){
+              fade = 1;
+              });
+
+            }
+           
+           // alert(fade + "dog");
+              
+            // reading slide going up to  -> blank
+            else if ( direction == "up" && fade == 0) { 
+              $(".reading-read").fadeTo("slow" , 0.0);
+            $('.full-back-overlay').fadeTo("slow" , 0.1);
+           // alert(fade + "cat");
+            fade = 1;
+            return true;
+            }
+
+            // blank going up -> reading
+            else if ( direction == "up" && fade == 1){ 
+              
+            $(".reading-read").fadeTo("slow" , 1);
+            $('.full-back-overlay').fadeTo("slow" , 0.8);
+             //alert(fade + "two");
+             fade = 0;
+            return false;
+            return false;
+            }
+            else if ( direction == "down" && fade == 1){
+            
+             $(".reading-read").fadeTo("slow" , 1);
+            $('.full-back-overlay').fadeTo("slow" , 0.8);
+            // alert(fade + "three");
+            fade = 0;
+             return true;
+           
+            }
+            else{
+        
+            }*/
+          },
+
+         //navigation
+            menu: true,
+            //navigation
+            anchors:[],
+            lockAnchors: false,
+            navigation: true,
+            navigationPosition: 'right',
+            navigationTooltips: ['1901','1908',"1913","1914","1915","1916","1922","1923","1927","1933"],
+            showActiveTooltip: true,
+            slidesNavigation: true,
+            slidesNavPosition: 'bottom',
+            scrollBar: false,
+            hybrid: false,
+
+        css3: true,
+        scrollingSpeed: 1000,
+        autoScrolling: true,
+        //scrollBar: true,
+        easing: 'swing',
+        easingcss3: 'ease',
+        loopBottom: false,
+        loopTop: false,
+        loopHorizontal: false,
+        continuousVertical: false,
+        scrollOverflow: true,
+        touchSensitivity: 17,
+        normalScrollElementTouchThreshold: 5,
+
+        //Accessibility
+        keyboardScrolling: true,
+        animateAnchor: true,
+
+        //Design
+        verticalCentered: true,
+        resize : true,
+        sectionsColor : ['#ccc', '#000'],
+        paddingTop: '0em',
+        paddingBottom: '0px',
+        fixedElements: '#header,  .footer, .darkpopup, .modaldark, .leftnavbar',
+        responsive: 700,
+
+      });
+  });
+ 
+   
+  //menu 
+  $(function(){
+  var menuwidth  = 240; // pixel value for sliding menu width
+  var menuspeed  = 400; // milliseconds for sliding menu animation time
+  
+  var $head       = $('header');
+  var $second    = $('#second-menu'); 
+  var $container = $('#pgcontainer');
+  var $burger    = $('#hamburgermenu');
+  var negwidth   = "-"+menuwidth+"px";
+  var poswidth   = menuwidth+"px";
+  var negheight  = 0;
+  var posheight  = 100;
+  
+  $('.menubtn').on('click',function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateMenu('close');
+      secondmenuhide();
+          } else {
+      jsAnimateMenu('open');
+    }
+  });
+
+  $('.overlay').on('click', function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateMenu('close');
+      secondmenuhide();
+    }
+  });
+
+   $('.menu-title').on('click',function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateSecondMenu(this.id);
+    } else {
+      jsAnimateSecondMenu('open');
+    }
+ });
+
+  $('a[href$="#"]').on('click', function(e){
+    e.preventDefault();
+  });
+
+function jsAnimateSecondMenu(tog) {
+    if(tog == '1') {
+       secondmenuhide();
+       $("#oil-menu").show();  
+    }
+    else if(tog == '2') {
+       
+       $("#coup-menu").show();
+    }
+    else if(tog == '3') {
+       secondmenuhide();
+       $("#rev-menu").show();
+    }
+    else if(tog == '4') {
+       secondmenuhide();
+       $("#modern-menu").show();
+    }
+    else{
+   }
+  }
+function secondmenuhide () {
+    $("#oil-menu").hide();
+    $("#coup-menu").hide();
+    $("#rev-menu").hide();
+    $("#modern-menu").hide();
+  }
+
+  function jsAnimateMenu(tog) {
+    if(tog == 'open') {
+      $head.addClass('openmenu');
+      $container.animate({marginRight: negwidth, marginLeft: poswidth}, menuspeed);
+      $burger.animate({width: poswidth}, menuspeed);
+      $('.overlay').animate({left: poswidth}, menuspeed);
+    }
+    
+    if(tog == 'close') {
+      $head.removeClass('openmenu');
+      
+      $container.animate({marginRight: "0", marginLeft: "0"}, menuspeed);
+      $burger.animate({width: "0"}, menuspeed);
+      $('.overlay').animate({left: "0"}, menuspeed);
+    }
+  }
+
+
+
+//reading page
+  $('.ex-info').on('click', function(e){
+     var id = $(this).attr( "data" );
+    $('#'+id+" "+'.info-page').delay( 2000 ).addClass("page-up");
+    $('#'+id+" "+'.info-paper').delay(2000 ).addClass("down");
+    
+  });
+
+  $('.info-page-exit').on('click', function(e){
+     $('.info-page').removeClass("page-up");
+     $('.info-paper').removeClass("down");
+     $('.info-paper').removeClass("up");
+  });
+
+  //popup
+
+   $('.popup-link').on('click', function(e){
+      if($('.info-paper').hasClass('up')){
+         $(this).parent().parent().removeClass('up');
+         $(this).parent().parent().addClass('down');
+       }
+      else if($('.info-paper').hasClass('down')){
+         $(this).parent().parent().removeClass('down');
+        $(this).parent().parent().addClass('up');
+       }
+      else{
+        
+       }
+
+  });
+
+
+
+
+//reading page
+  $('.fade').on('click', function(e){
+    if($('.reading-page').hasClass('detail')) {
+      readingreveal('close');
+    //  stopMedia(leavingSection);
+    }
+      else{
+        readingreveal('open');
+      }
+  });
+  function readingreveal(tog){
+    if(tog == "open"){
+      $(".reading-read").fadeTo("slow" , 0.0).hide("slow");
+      $('.full-back-overlay').fadeTo("slow" , 0.4);
+      $(".marker").show("slow").fadeTo("slow" , 1);
+      $('.reading-page').addClass("detail");
+      $(".reading-quote").fadeTo("slow" , 1.0).show("slow");
+     }
+    if(tog == 'close') {
+      $(".reading-quote").fadeTo("slow" , 0.0).hide("slow");
+      $(".reading-read").show("slow").fadeTo("slow" , 1);
+      $('.full-back-overlay').show("slow").fadeTo("slow" , 0.8);
+      $(".marker").fadeTo("slow" , 0).hide("slow");
+      $('.reading-page').removeClass("detail");
+    }
+  }
+
+});
+ </script>
+</head>
