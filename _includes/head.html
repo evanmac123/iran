@@ -10,11 +10,19 @@
     <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
    <link rel="stylesheet" href="{{ "/css/jquery.fullPage.css" | prepend: site.baseurl }}">
     <link rel="stylesheet" href="{{ "/css/main.css" | prepend: site.baseurl }}">
+
    <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
     <script type="text/javascript" src="{{ "/assets/js/jquery.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript" src="{{ "/assets/js/scrolloverflow.min.js" | prepend: site.baseurl }}"></script>
+    <script type="text/javascript" src="{{ "/assets/js/jquery.slimscroll.min.js" | prepend: site.baseurl }}"></script>
    <script type="text/javascript" src="{{ "/assets/js/jquery.fullPage.min.js" | prepend: site.baseurl }}"></script>
-   <script type="text/javascript" src="{{ "/assets/js/jquery.slimscroll.min.js" | prepend: site.baseurl }}"></script>
     <script type="text/javascript" src="{{ "/assets/js/jquery.jkit.1.2.16.js" | prepend: site.baseurl }}"></script>   
+     
+    <!--CDN links for TweenLite, CSSPlugin, and EasePack-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineLite.min.js"></script>
     <script type="text/javascript">
 
 
@@ -58,16 +66,44 @@
 
 
     fade = 0;
+
+
+              var chapteranim = new TimelineLite();
+              var chapter = document.getElementsByClassName("chapter-title");
+              var chapterback = document.getElementsByClassName("full-back-orange");
+              var chapternum = document.getElementsByClassName("chapter-number");
+              var chapternumunder = document.getElementsByClassName("chapter-number::after");
+
+              var chapteropen = chapteranim.addPause(1)
+              .to(chapterback,3, {opacity:"1"},"begin")
+              .to(chapter,1, {opacity:"1"})
+              .to(chapternum,1, {opacity:"1"})
+              .to(chapternumunder,1, {width:"100%"})
+              .to(chapter,1, {fontSize:".9em"})
+              .to(chapter,2, {top:"30px"})
+              .to(chapternum,2, {left:"20px"},"end");
+
+              
+             
+
+
     //fullpage.js
   $('#fullpage').fullpage({
-         onLeave: function(index, nextIndex, direction){  
+         onLeave: function(index, nextIndex, direction){ 
 
-            if([2,6,13,17].indexOf(nextIndex) !== -1 ) {  
-            $(".chapter-title").addClass("chapter-closed");      
+            if([2,6,13,17].indexOf(nextIndex) !== -1 ) { 
+               chapteropen.play();
+               
+              
+           // $(".chapter-title").addClass("chapter-closed");
+           // $(".chapter-quote").addClass("chapter-quote-closed");    
           }
-
             else {   
-            $(".chapter-title").removeClass("chapter-closed");      
+                
+              chapteropen.reverse();
+               console.log("cat");
+         //   $(".chapter-title").removeClass("chapter-closed");
+         //   $(".chapter-quote").removeClass("chapter-quote-closed");   
           }
 
         
@@ -142,7 +178,7 @@
         loopTop: false,
         loopHorizontal: false,
         continuousVertical: false,
-        scrollOverflow: true,
+        scrollOverflow: false,
         touchSensitivity: 17,
         normalScrollElementTouchThreshold: 5,
 
@@ -256,13 +292,14 @@ function secondmenuhide () {
      var id = $(this).attr( "data" );
     $('#'+id+" "+'.info-page').delay( 2000 ).addClass("page-up");
     $('#'+id+" "+'.info-paper').delay(2000 ).addClass("down");
-    
+    $.fn.fullpage.setAllowScrolling(false);
   });
 
   $('.info-page-exit').on('click', function(e){
      $('.info-page').removeClass("page-up");
      $('.info-paper').removeClass("down");
      $('.info-paper').removeClass("up");
+     $.fn.fullpage.setAllowScrolling(true);
   });
 
   //popup
@@ -274,16 +311,25 @@ function secondmenuhide () {
        }
       else if($('.info-paper').hasClass('down')){
          $(this).parent().parent().removeClass('down');
-        $(this).parent().parent().addClass('up');
+         $(this).parent().parent().addClass('up');
+
        }
       else{
-        
        }
 
   });
 
 
+  //video
 
+  $(".video-full-section").on('click', function(e){  
+    if($(this).get(0).paused){
+       $(this).get(0).play()
+    }
+    else{
+      $(this).get(0).pause()
+    }
+  });
 
 //reading page
   $('.fade').on('click', function(e){

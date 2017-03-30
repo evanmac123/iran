@@ -8,9 +8,9 @@ chapter-img: oiltower.jpg
 title: "Under"
 small: "Black Gold"
 image: qajarfancy.jpg
-pop1-title: Naser al-Din Shah
-pop1: naser
-pop-up: qajar.jpg
+pop1-title: Southern Oil Fields
+pop1: oil
+pop-up: irandark.png
 
 
 quote-title: Elwell-Sutton 

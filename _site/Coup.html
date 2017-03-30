@@ -1,0 +1,747 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Iran</title>
+    <meta name="viewport" content="width=device-width">
+    <meta name="description" content="Write an awesome description for your new site here. You can edit this line in _config.yml. It will appear in your document head meta (for Google search results) and in your feed.xml site description.
+">
+    <link rel="canonical" href="http://localhost:4000/Coup.html">
+
+    <!-- Custom Fonts -->
+    <link href="https://fonts.googleapis.com/css?family=Special+Elite" rel="stylesheet">
+   <link rel="stylesheet" href="/css/jquery.fullPage.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+   <!--<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>-->
+    <script type="text/javascript" src="/assets/js/jquery.js"></script>
+    <script type="text/javascript" src="/assets/js/scrolloverflow.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.slimscroll.min.js"></script>
+   <script type="text/javascript" src="/assets/js/jquery.fullPage.min.js"></script>
+    <script type="text/javascript" src="/assets/js/jquery.jkit.1.2.16.js"></script>   
+     
+    <!--CDN links for TweenLite, CSSPlugin, and EasePack-->
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/plugins/CSSPlugin.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/easing/EasePack.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TweenLite.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/1.19.0/TimelineLite.min.js"></script>
+    <script type="text/javascript">
+
+
+//Scrolling
+    $(document).ready(function() {
+      $('body').jKit();
+    //slimscroll.js
+    $('.reading-text').slimScroll({
+    height: '400px',
+    allowPageScroll: false, 
+    });
+
+    var amount = '';
+
+    function scroll() {
+    $('.reading-text').animate({
+        scrollTop: amount
+    }, 140, 'linear',function() {
+        if (amount != '') {
+            scroll();
+        }
+    });
+    }
+
+    $('.top-hover-scroll').hover(function() {
+        amount = '-=5';
+        scroll();
+    }, function() {
+        amount = '';
+    });
+    $('.bottom-hover-scroll').hover(function() {
+        amount = '+=5';
+        scroll();
+    }, function() {
+        amount = '';
+    });
+    $('.mid-hover-scroll').hover(function() {
+      var amount = '';
+      console.log("cats");
+    });
+
+
+    fade = 0;
+
+
+              var chapteranim = new TimelineLite();
+              var chapter = document.getElementsByClassName("chapter-title");
+              var chapterback = document.getElementsByClassName("full-back-orange");
+              var chapternum = document.getElementsByClassName("chapter-number");
+              var chapternumunder = document.getElementsByClassName("chapter-number::after");
+
+              var chapteropen = chapteranim.addPause(1)
+              .to(chapterback,3, {opacity:"1"},"begin")
+              .to(chapter,1, {opacity:"1"})
+              .to(chapternum,1, {opacity:"1"})
+              .to(chapternumunder,1, {width:"100%"})
+              .to(chapter,1, {fontSize:".9em"})
+              .to(chapter,2, {top:"30px"})
+              .to(chapternum,2, {left:"20px"},"end");
+
+              
+             
+
+
+    //fullpage.js
+  $('#fullpage').fullpage({
+         onLeave: function(index, nextIndex, direction){ 
+
+            if([2,6,13,17].indexOf(nextIndex) !== -1 ) { 
+               chapteropen.play();
+               
+              
+           // $(".chapter-title").addClass("chapter-closed");
+           // $(".chapter-quote").addClass("chapter-quote-closed");    
+          }
+            else {   
+                
+              chapteropen.reverse();
+               console.log("cat");
+         //   $(".chapter-title").removeClass("chapter-closed");
+         //   $(".chapter-quote").removeClass("chapter-quote-closed");   
+          }
+
+        
+
+        /*  
+            // reading slide going down with writing -> blank
+            if ( direction == "down" && fade == 0) {   
+          
+            $(".reading-read").animate({
+              opacity:0.25  },1000, function(){
+              fade = 1;
+              });
+
+            }
+           
+           // alert(fade + "dog");
+              
+            // reading slide going up to  -> blank
+            else if ( direction == "up" && fade == 0) { 
+              $(".reading-read").fadeTo("slow" , 0.0);
+            $('.full-back-overlay').fadeTo("slow" , 0.1);
+           // alert(fade + "cat");
+            fade = 1;
+            return true;
+            }
+
+            // blank going up -> reading
+            else if ( direction == "up" && fade == 1){ 
+              
+            $(".reading-read").fadeTo("slow" , 1);
+            $('.full-back-overlay').fadeTo("slow" , 0.8);
+             //alert(fade + "two");
+             fade = 0;
+            return false;
+            return false;
+            }
+            else if ( direction == "down" && fade == 1){
+            
+             $(".reading-read").fadeTo("slow" , 1);
+            $('.full-back-overlay').fadeTo("slow" , 0.8);
+            // alert(fade + "three");
+            fade = 0;
+             return true;
+           
+            }
+            else{
+        
+            }*/
+          },
+
+         //navigation
+            menu: true,
+            //navigation
+            anchors:[],
+            lockAnchors: false,
+            navigation: true,
+            navigationPosition: 'right',
+            navigationTooltips: ['1901','1908',"1913","1914","1915","1916","1922","1923","1927","1933"],
+            showActiveTooltip: true,
+            slidesNavigation: true,
+            slidesNavPosition: 'bottom',
+            scrollBar: false,
+            hybrid: false,
+
+        css3: true,
+        scrollingSpeed: 1000,
+        autoScrolling: true,
+        //scrollBar: true,
+        easing: 'swing',
+        easingcss3: 'ease',
+        loopBottom: false,
+        loopTop: false,
+        loopHorizontal: false,
+        continuousVertical: false,
+        scrollOverflow: false,
+        touchSensitivity: 17,
+        normalScrollElementTouchThreshold: 5,
+
+        //Accessibility
+        keyboardScrolling: true,
+        animateAnchor: true,
+
+        //Design
+        verticalCentered: true,
+        resize : true,
+        sectionsColor : ['#ccc', '#000'],
+        paddingTop: '0em',
+        paddingBottom: '0px',
+        fixedElements: '#header,  .footer, .darkpopup, .modaldark, .leftnavbar',
+        responsive: 700,
+
+      });
+  });
+ 
+   
+  //menu 
+  $(function(){
+  var menuwidth  = 240; // pixel value for sliding menu width
+  var menuspeed  = 400; // milliseconds for sliding menu animation time
+  
+  var $head       = $('header');
+  var $second    = $('#second-menu'); 
+  var $container = $('#pgcontainer');
+  var $burger    = $('#hamburgermenu');
+  var negwidth   = "-"+menuwidth+"px";
+  var poswidth   = menuwidth+"px";
+  var negheight  = 0;
+  var posheight  = 100;
+  
+  $('.menubtn').on('click',function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateMenu('close');
+      secondmenuhide();
+          } else {
+      jsAnimateMenu('open');
+    }
+  });
+
+  $('.overlay').on('click', function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateMenu('close');
+      secondmenuhide();
+    }
+  });
+
+   $('.menu-title').on('click',function(e){
+    if($head.hasClass('openmenu')) {
+      jsAnimateSecondMenu(this.id);
+    } else {
+      jsAnimateSecondMenu('open');
+    }
+ });
+
+  $('a[href$="#"]').on('click', function(e){
+    e.preventDefault();
+  });
+
+function jsAnimateSecondMenu(tog) {
+    if(tog == '1') {
+       secondmenuhide();
+       $("#oil-menu").show();  
+    }
+    else if(tog == '2') {
+       
+       $("#coup-menu").show();
+    }
+    else if(tog == '3') {
+       secondmenuhide();
+       $("#rev-menu").show();
+    }
+    else if(tog == '4') {
+       secondmenuhide();
+       $("#modern-menu").show();
+    }
+    else{
+   }
+  }
+function secondmenuhide () {
+    $("#oil-menu").hide();
+    $("#coup-menu").hide();
+    $("#rev-menu").hide();
+    $("#modern-menu").hide();
+  }
+
+  function jsAnimateMenu(tog) {
+    if(tog == 'open') {
+      $head.addClass('openmenu');
+      $container.animate({marginRight: negwidth, marginLeft: poswidth}, menuspeed);
+      $burger.animate({width: poswidth}, menuspeed);
+      $('.overlay').animate({left: poswidth}, menuspeed);
+    }
+    
+    if(tog == 'close') {
+      $head.removeClass('openmenu');
+      
+      $container.animate({marginRight: "0", marginLeft: "0"}, menuspeed);
+      $burger.animate({width: "0"}, menuspeed);
+      $('.overlay').animate({left: "0"}, menuspeed);
+    }
+  }
+
+
+
+//reading page
+  $('.ex-info').on('click', function(e){
+     var id = $(this).attr( "data" );
+    $('#'+id+" "+'.info-page').delay( 2000 ).addClass("page-up");
+    $('#'+id+" "+'.info-paper').delay(2000 ).addClass("down");
+    $.fn.fullpage.setAllowScrolling(false);
+  });
+
+  $('.info-page-exit').on('click', function(e){
+     $('.info-page').removeClass("page-up");
+     $('.info-paper').removeClass("down");
+     $('.info-paper').removeClass("up");
+     $.fn.fullpage.setAllowScrolling(true);
+  });
+
+  //popup
+
+   $('.popup-link').on('click', function(e){
+      if($('.info-paper').hasClass('up')){
+         $(this).parent().parent().removeClass('up');
+         $(this).parent().parent().addClass('down');
+       }
+      else if($('.info-paper').hasClass('down')){
+         $(this).parent().parent().removeClass('down');
+         $(this).parent().parent().addClass('up');
+
+       }
+      else{
+       }
+
+  });
+
+
+  //video
+
+  $(".video-full-section").on('click', function(e){  
+    if($(this).get(0).paused){
+       $(this).get(0).play()
+    }
+    else{
+      $(this).get(0).pause()
+    }
+  });
+
+//reading page
+  $('.fade').on('click', function(e){
+    if($('.reading-page').hasClass('detail')) {
+      readingreveal('close');
+    //  stopMedia(leavingSection);
+    }
+      else{
+        readingreveal('open');
+      }
+  });
+  function readingreveal(tog){
+    if(tog == "open"){
+      $(".reading-read").fadeTo("slow" , 0.0).hide("slow");
+      $('.full-back-overlay').fadeTo("slow" , 0.4);
+      $(".marker").show("slow").fadeTo("slow" , 1);
+      $('.reading-page').addClass("detail");
+      $(".reading-quote").fadeTo("slow" , 1.0).show("slow");
+     }
+    if(tog == 'close') {
+      $(".reading-quote").fadeTo("slow" , 0.0).hide("slow");
+      $(".reading-read").show("slow").fadeTo("slow" , 1);
+      $('.full-back-overlay').show("slow").fadeTo("slow" , 0.8);
+      $(".marker").fadeTo("slow" , 0).hide("slow");
+      $('.reading-page').removeClass("detail");
+    }
+  }
+
+});
+ </script>
+</head>
+
+
+<body>
+
+      <header>
+    <div id="navbar">
+      <a class="menubtn">menu</a>
+      <!-- use captain icon for toggle menu -->
+      <div id="hamburgermenu">
+        <ul>
+          <li>
+            <a class="menu-title" id="1" href="#" >
+            British Oil 
+              <div class="subtitle-menu">1930-1950</div>
+              </a>
+          </li>
+          <li>
+            <a class="menu-title" id="2" href="#">The Coup
+              <div class="subtitle-menu">1930-1950</div>
+           </a>
+         </li>
+          <li>
+            <a class="menu-title" id="3" href="#">The Revolution
+                <div class="subtitle-menu">1930-1950</div>
+             </a>
+          </li>
+          <li>
+            <a class="menu-title" id="4" href="#">Modern Iran
+              <div class="subtitle-menu">1930-1950</div>
+            </a>
+          </li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </div>
+      <div class="second-menu-group">
+       <div id="oil-menu" class="second-menu">
+          <li>
+            <a href="#" class="second-menu-title oil">1</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title ">Blood</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title">Sand</a>
+          </li>
+       </div>
+       <div id="coup-menu" class="second-menu">
+          <li>
+            <a href="#" class="second-menu-title oil">1</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title ">Blood</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title">Sand</a>
+          </li>
+       </div>
+       <div id="rev-menu" class="second-menu">
+          <li>
+            <a href="#" class="second-menu-title oil">1</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title ">Blood</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title">Sand</a>
+          </li>
+       </div> 
+       <div id="modern-menu" class="second-menu">
+          <li>
+            <a href="#" class="second-menu-title oil">Oil</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title ">Blood</a>
+          </li>
+          <li>
+            <a href="#" class="second-menu-title">Sand</a>
+          </li>
+       </div>
+      </div>
+    </div>
+    <div class="overlay"></div>
+  </header>
+  
+
+ 
+
+
+
+	<div class="archive">
+	
+	
+	 <div id="naser" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive/Mozaffar_al-Din_Shah_Qajar113.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Naser al-Din Shah</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>In 1900 he agreed to fund a search for oil and minerals in Persia headed by Wolff, Kitabgi and Cotte. Negotiations with the Mozaffar al-Din Shah Qajar began in 1901 and with the offer of £20,000 for a sixty year concession to explore for oil was secured in May covering 480,000 square miles (1,200,000 km2). The concession stipulated that William D’Arcy would have the oil rights to the entire country except for five provinces in Northern Iran. In exchange the Iranian government was given 16% of the oil company’s annual profits, an agreement that would haunt the Iranians up until the late 20th century. After the D’Arcy concession the British became much more concerned with the stability of Iran because of their reliance on the country’s vast oil reserves.[4]</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="newshah" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar2/shah.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Reza Shah</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>In 1943 Iran declared war on Germany due to pressure from Allied forces and by doing so gained membership in the United Nations. The dominance of Allied forces on Iran’s social and economics systems would harshly disrupt the economic and political growth the country had enjoyed before the war. This domination and the lack of respect for Iranian power and autonomy would be most expressed in the 1943 Tehran conference where the “Big Three” leader of the U.S., U.S.S.R. and Great Britain would be meet to go over military and diplomatic decisions. Though this conference was held in Iran, a now legitimate ally, the Allied Powers would shut the proceedings to all Iranian diplomats and dictate the future end of the occupation through vague promises of commitment to Iranian independence and future economic aid.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="Anglo-Persian" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/reza/anglo.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Anglo-Persian Oil Company</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>Originally set up by Burmah Oil in 1909 the company would buy D’Arcy’s concession and begin to set up what was the the largest Refinery in the world for the next fifty years. In the aftermath of World War II the British government would buy a majority of shares in the company and operate it as a proxy to help fuel their ships. The company was renamed in 1954 to its modern name as British Petroleum or BP.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="tehran" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar2/britishcrisis.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">1946 Iran Crisis Brits</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>In 1943 Iran declared war on Germany due to pressure from Allied forces and by doing so gained membership in the United Nations. The dominance of Allied forces on Iran’s social and economics systems would harshly disrupt the economic and political growth the country had enjoyed before the war. This domination and the lack of respect for Iranian power and autonomy would be most expressed in the 1943 Tehran conference where the “Big Three” leader of the U.S., U.S.S.R. and Great Britain would be meet to go over military and diplomatic decisions. Though this conference was held in Iran, a now legitimate ally, the Allied Powers would shut the proceedings to all Iranian diplomats and dictate the future end of the occupation through vague promises of commitment to Iranian independence and future economic aid.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="concession" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/reza/anglopersian.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Concession</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>Reza Shah in the 1920’s began to pressure for fundamental changes in the terms of the original 1908 oil concession. This arrangement pulled back the original concession area to 100,000 square miles, exempted the company from all taxes other than those provided for in the original concession and, most importantly, extended the concession for another 60 years. The Iranians gained 25 percent of the company’s shares an increase from their original 16 percent the new agreement that took effect in 1933.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="invasion" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar1/bearandlion.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">The Great Game</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>Iran or Persia as it was formerly known was neutral in World War I but was the center of Russia and Great Britain’s Great Game for control over the middle east. The German’s entered into this game in the beginning of the 20 Century to eventual cut off India from the British. At the start of World War I the Central Powers led by the Ottoman Empire would begin skirmishes on the edges of Persian territories. The Russians and British shortly after invaded Persia to protect their oil and established their respective spheres of influence in the North and the South. The war ended with Persia under foreign occupation and without much hope.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="oil" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/blackgold/oilrig.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Oil Fields</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>A drilling team under George B. Reynolds was sent to Persia and began to search for oil for the millionaire William D’Arcy. In 1903 a company was formed and D’Arcy had to spend over £500,000 to cover the costs. False hopes were raised in 1904 and D’Arcy was forced to find further financial support, with the Burmah Oil Company Ltd. agreeing to put up to £100,000 into the venture in return for much of the stock. Drilling began at one site in January 1908 and at another nearby in March. By April with no success the venture was close to collapse and D’Arcy almost bankrupt, but on 16 May there were encouraging signs and on 26 May at 1,180 feet (360 m) they struck oil.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="tehran" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar2/postwar.jpg">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">1946 Iran Crisis Russia</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>In 1943 Iran declared war on Germany due to pressure from Allied forces and by doing so gained membership in the United Nations. The dominance of Allied forces on Iran’s social and economics systems would harshly disrupt the economic and political growth the country had enjoyed before the war. This domination and the lack of respect for Iranian power and autonomy would be most expressed in the 1943 Tehran conference where the “Big Three” leader of the U.S., U.S.S.R. and Great Britain would be meet to go over military and diplomatic decisions. Though this conference was held in Iran, a now legitimate ally, the Allied Powers would shut the proceedings to all Iranian diplomats and dictate the future end of the occupation through vague promises of commitment to Iranian independence and future economic aid.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="tehran" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar2/tehran.png">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Tehran conference</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>In 1943 Iran declared war on Germany due to pressure from Allied forces and by doing so gained membership in the United Nations. The dominance of Allied forces on Iran’s social and economics systems would harshly disrupt the economic and political growth the country had enjoyed before the war. This domination and the lack of respect for Iranian power and autonomy would be most expressed in the 1943 Tehran conference where the “Big Three” leader of the U.S., U.S.S.R. and Great Britain would be meet to go over military and diplomatic decisions. Though this conference was held in Iran, a now legitimate ally, the Allied Powers would shut the proceedings to all Iranian diplomats and dictate the future end of the occupation through vague promises of commitment to Iranian independence and future economic aid.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	 <div id="war-people" class="archive-show">
+<div class="info-page">
+		<div class="container">
+			<div class="row ">
+				<div class="12 columns">
+			 		<img class="pop-up-img" src="http://localhost:4000/assets/images/archive//popups/OilandImperialism/worldwar1/iranianmilitary.png">
+				</div>
+			</div>
+		</div>
+		<a href="#" class="info-page-exit">
+			<img src="/assets/icons/exit.png">
+		</a>
+</div>
+	<div class="info-paper">
+		<div class="container">
+		<div class="info-title">Occupation</div>
+		<a class="popup-link" href="#">
+			<img src="/assets/icons/exit.png"></a>
+		<div class="info-content"><p>Iran’s military forces could not stand up to attacks from the Russians, Germans, Ottomans, and British. The military had little artillery and was mostly reliant on rifles and horses. Defenses crumbled quickly and the government was overthrown and run as a puppet system by foreign powers. The war ended with Persia under foreign occupation and without much hope as the British formally considered annexing them as a protectorate.</p>
+
+</div>
+		</div>
+	</div>
+</div>
+	
+	<div class="archive-back">
+	</div>
+</div>
+ <div id="fullpage"> 
+ 
+cat
+
+<section  class="section full-back-section reading-page">	
+	<h2 class="chapter-title"> World At War </h2>
+	<div class="parallax-container" data-jkit="[parallax:strength=1;axis=both;]">
+		<div class=" full-back-section2" style='background-image:url("http://localhost:4000/assets/images/british-oil/backgrounds/events/rezashah.jpg"'></div>
+	</div>
+	<div class="full-back-orange"></div>
+
+</section> 
+
+
+
+
+
+	
+
+
+
+</div>
+
+<footer class="footer">
+
+
+    <a href="#">Archives</a>
+	<a href="#">Credits</a>
+	<a href="#">About</a>
+</footer>
+
+
+</body>
+
+</html>

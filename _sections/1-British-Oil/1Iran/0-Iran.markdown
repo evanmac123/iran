@@ -1,22 +1,19 @@
 ---
 layout: BritishOil
 
-chapter-img: oiltower.jpg
 section: british-oil
 chapter: History of Iran
 
 type: reading
 title: "Iran"
 small: "History of"
-image: persian_empire.jpg
+image: irannature.jpg
 pop1-title: Naser al-Din Shah
 pop1: naser
-pop2-title: Bob
-pop2: bob
-pop-up: irandark.png
+pop-up: qajar.jpg
 
-quote-title: Abolqasem Ferdowsi
-quote-content: “I've reached the end of this great history And all the land will fill with talk of me I shall not die, these seeds I've sown will save My name and reputation from the grave, And men of sense and wisdom will proclaim, When I have gone, my praises and my fame.”
+quote-title: Cyrus the Great
+quote-content: “Even if the skies were shorter than my knees, I would not kneel.”
 
 quote-img: alexandermosaic.jpg
 
