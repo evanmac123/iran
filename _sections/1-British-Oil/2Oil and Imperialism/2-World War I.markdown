@@ -16,7 +16,7 @@ pop2-title: Occupation
 pop2: war-people
 pop-up: worldwar1.png
 
-quote-title: George Curzon, Head of the British Occupation
+quote-title: George Curzon, British Lord
 quote-content: "If it be asked why we should undertake the task at all, and why Persia should not be left to herself and allowed to rot into picturesque decay, the answer is that her geographical position, the magnitude of our interests in the country, and the future safety of our Eastern Europe make it impossible for us now."
 
 quote-img: oilpipeline.jpg

@@ -16,7 +16,7 @@ pop2-title: 1933 Oil Concession
 pop2: concession
 pop-up: rezapop.jpg
 
-quote-title: Ahmad Kasravi, Parcham, 16 August 1942
+quote-title: Ahmad Kasravi, Parcham
 quote-content: "Our younger intellectuals cannot possibly understand, and thus cannot possibly judge Reza Shah. They cannot because they were too young to remember the chaotic and desperate conditions out of which he arose."
 quote-img: rezawithgeneral.jpg
 

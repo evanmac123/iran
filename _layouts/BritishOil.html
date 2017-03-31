@@ -21,6 +21,7 @@
 {% assign Oil = site.sections | where: "chapter", "Oil and Imperialism" %}
 {% assign Reza = site.sections | where: "chapter", "Reza Shah" %}
 {% assign WorldWar = site.sections | where: "chapter", "World War II" %}
+
      {% include NationofOil.html %} 
     {% include chapter1.html %} 
 	{% for item in HistoryofIran %}
@@ -48,6 +49,9 @@
         {% include quote.html %} 
         {% include pop-up.html %} 
     {% endfor %}
+    {% include videocrisis.html %}
+
+    {% include BritishOilaftermath.html %} 
 
 
 </div>
